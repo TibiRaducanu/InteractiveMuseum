@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QCARConfig xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="qcar_config.xsd">
+  <Tracking>
+    <ImageTarget name="mazzantini" size="100.000000 152.636719" />
+    <ImageTarget name="cioran" size="100.000000 153.846161" />
+    <ImageTarget name="sunca_bukowski" size="100.000000 169.971664" />
+    <ImageTarget name="pi_book" size="100.000000 153.692307" />
+  </Tracking>
+</QCARConfig>

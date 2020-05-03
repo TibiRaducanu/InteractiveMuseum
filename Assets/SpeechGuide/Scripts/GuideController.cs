@@ -2,12 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(SpeechController))]
 public class GuideController : MonoBehaviour
 {
-    public string text;
-    public UnityEvent OnAudioEnd;
+    public enum SelectedLanguage
+    {
+        En = 0,
+        Fr = 1
+    };
+
+    private SelectedLanguage _currSelectedLang = SelectedLanguage.En;
+
+    public string textEn;
+    public string textFr;
+    
+    [FormerlySerializedAs("OnAudioEnd")] public UnityEvent onAudioEnd;
 
     private SpeechController _speechController;
     private Animator _anim;
@@ -22,12 +33,35 @@ public class GuideController : MonoBehaviour
         _anim = GetComponent<Animator>();
     }
 
+    public void OnLanguageChanged(int option)
+    {
+        _currSelectedLang = (SelectedLanguage)option; 
+        StopTalk();
+    }
+
     public void Talk()
     {
+        gameObject.SetActive(true);
         _isTalking = true;
-        
-        _speechController.Play(text);
+
+        switch (_currSelectedLang)
+        {
+            case SelectedLanguage.En:
+                _speechController.Play(textEn, _currSelectedLang);
+                break;
+            case SelectedLanguage.Fr:
+                _speechController.Play(textFr, _currSelectedLang);
+                break;
+        }
         _anim.SetBool("isTalking", true);
+    }
+
+    public void OnAudioStarted()
+    {
+        if (!_isTalking)
+        {
+            return;
+        }
 
         _checkAudioEndCoroutine = StartCoroutine(CheckAudioEnd());
     }
@@ -40,10 +74,9 @@ public class GuideController : MonoBehaviour
         }
         
         StopTalk();
-        OnAudioEnd.Invoke();
     }
 
-    public void CancelAudioCheck()
+    private void CancelAudioCheck()
     {
         if (_checkAudioEndCoroutine == null)
         {
@@ -53,7 +86,7 @@ public class GuideController : MonoBehaviour
         StopCoroutine(_checkAudioEndCoroutine);
     }
 
-    public void PauseTalk()
+    private void PauseTalk()
     {
         _isTalking = false;
         
@@ -61,6 +94,7 @@ public class GuideController : MonoBehaviour
         _anim.SetBool("isTalking", false);
 
         CancelAudioCheck();
+        onAudioEnd.Invoke();
     }
 
     public void StopTalk()
@@ -71,6 +105,11 @@ public class GuideController : MonoBehaviour
         _anim.SetBool("isTalking", false);
 
         CancelAudioCheck();
+
+        if (_checkAudioEndCoroutine != null)
+        {
+            onAudioEnd.Invoke();
+        }
     }
 
     public void ToggleTalk()

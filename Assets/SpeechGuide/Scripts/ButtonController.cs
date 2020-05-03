@@ -17,6 +17,12 @@ public class ButtonController : MonoBehaviour
         btnImage = GetComponent<Image>();
     }
 
+    public void SetImageOnPause()
+    {
+        pauseImage = true;
+        btnImage.sprite = pauseBtn;
+    }
+
     public void SetImageOnPlay()
     {
         pauseImage = false;
@@ -31,8 +37,7 @@ public class ButtonController : MonoBehaviour
         }
         else
         {
-            pauseImage = true;
-            btnImage.sprite = pauseBtn;
+            SetImageOnPause();
         }
     }
 }

@@ -34,6 +34,9 @@ public class KnightController : MonoBehaviour
     public Image healthBar;
 
     public Canvas healthBarCanvas;
+
+    protected Vector3 InitialPosition;
+    protected KnightController InitialEnemy;
     
     // Start is called before the first frame update
     protected void Start()
@@ -47,6 +50,28 @@ public class KnightController : MonoBehaviour
         healthBarCanvas = GetComponentInChildren<Canvas>();
 
         _lastAttackTime = Time.time;
+
+        InitialPosition = transform.localPosition;
+        InitialEnemy = enemyChecker.enemy;
+    }
+
+    public void ReinitKnight()
+    {
+        gameObject.SetActive(true);
+        
+        _currHealth = maxHealth;
+        // transform.localPosition = InitialPosition;
+        isDead = false;
+
+        if (enemyChecker)
+        {
+            enemyChecker.enemy =
+                InitialEnemy;
+        }
+
+        Show();
+        
+        UpdateHealthBar();
     }
 
     // Update is called once per frame
@@ -160,6 +185,17 @@ public class KnightController : MonoBehaviour
         
         // also hide the health bar
         healthBarCanvas.enabled = false;
+    }
+
+    private void Show()
+    {
+        foreach (var render in GetComponentsInChildren<Renderer>())
+        {
+            render.enabled = true;
+        }
+        
+        // also hide the health bar
+        healthBarCanvas.enabled = true;
     }
 
     // Check onTrack to see if not dead, otherwise hide

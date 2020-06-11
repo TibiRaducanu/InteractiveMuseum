@@ -5,11 +5,12 @@ using UnityEngine.UI;
 using UnityEngine.Video;
 using UnityEngine.EventSystems;
 using System;
+using UnityEngine.Assertions;
 
 public class VideoTracker : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     public VideoPlayer video;
-    Slider tracker;
+    public Slider tracker;
     bool isSliding;
     float cooldown;
     float cooldownValue;
@@ -44,6 +45,7 @@ public class VideoTracker : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
             tracker.value = (float)video.frame / (float)video.frameCount;
         }
 
+        Assert.IsTrue(tracker.value - (float)video.frame / (float)video.frameCount < 0.1f);
         cooldown -= Time.deltaTime;
         if (cooldown < 0f) cooldown = 0f;
     }

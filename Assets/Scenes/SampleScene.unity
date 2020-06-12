@@ -1301,6 +1301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   video: {fileID: 1571374259}
+  tracker: {fileID: 0}
 --- !u!4 &289181317 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4016727387908236, guid: bf1067ac4cce904429196bd5902ef4c2,
@@ -5664,6 +5665,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Knight
       objectReference: {fileID: 0}
+    - target: {fileID: 2292398299918044740, guid: be448c45ebf6d264f9a07e65eaf86491,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 2292398299918144036, guid: be448c45ebf6d264f9a07e65eaf86491,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5772,6 +5778,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: KnightEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 8386460206793216165, guid: 811e825d8d926a04a8de6a87f86b7304,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 8386460206793247941, guid: 811e825d8d926a04a8de6a87f86b7304,
         type: 3}
